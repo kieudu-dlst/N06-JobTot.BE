@@ -1,5 +1,35 @@
 # JobTot Backend
 
+## Cấu trúc solution
+
+```text
+N06-JobTot.BE/
+├── JobTot.sln
+├── src/
+│   ├── JobTot.Domain/
+│   │   └── JobTot.Domain.csproj
+│   ├── JobTot.Application/
+│   │   └── JobTot.Application.csproj
+│   ├── JobTot.Infrastructure/
+│   │   ├── DependencyInjection.cs
+│   │   └── JobTot.Infrastructure.csproj
+│   └── JobTot.Api/
+│       ├── Program.cs
+│       ├── appsettings.json
+│       ├── appsettings.Development.json
+│       ├── Properties/
+│       │   └── launchSettings.json
+│       └── JobTot.Api.csproj
+├── .gitignore
+├── .editorconfig
+└── README.md
+```
+
+- `Domain`: entities và quy tắc nghiệp vụ cốt lõi.
+- `Application`: dịch vụ nghiệp vụ, interfaces và DTOs.
+- `Infrastructure`: truy cập SQL Server, Entity Framework và đăng ký dependency.
+- `Api`: cấu hình ứng dụng và các HTTP endpoints.
+
 ## Yêu cầu
 
 - .NET SDK 9.
@@ -27,3 +57,27 @@ dotnet run --project src/JobTot.Api --launch-profile http
 Mở Swagger tại **http://localhost:5049/swagger**.
 
 Nhấn `Ctrl+C` để dừng Backend.
+
+## Tạo migration thiết kế bảng
+
+Sau khi thêm hoặc sửa entities và cấu hình model, tạo migration (thay `TenMigration` bằng tên thay đổi):
+
+```powershell
+dotnet ef migrations add TenMigration `
+  --project src/JobTot.Infrastructure `
+  --startup-project src/JobTot.Api
+```
+
+## Tạo database và cập nhật cấu trúc bảng
+
+Dùng kết nối SQL Server đã cấu hình ở trên, chạy:
+
+```powershell
+dotnet ef database update `
+  --project src/JobTot.Infrastructure `
+  --startup-project src/JobTot.Api
+```
+
+Lệnh tạo database nếu chưa có và áp dụng các migration còn thiếu để tạo hoặc cập nhật bảng. Tài khoản kết nối cần có quyền tạo database hoặc thay đổi cấu trúc tương ứng.
+
+Nếu dự án đã có migrations, chỉ cần chạy `database update` để khởi tạo database; không cần tạo lại migration.
