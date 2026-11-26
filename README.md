@@ -1,5 +1,35 @@
 # JobTot Backend
 
+## Cấu trúc solution
+
+```text
+N06-JobTot.BE/
+├── JobTot.sln
+├── src/
+│   ├── JobTot.Domain/
+│   │   └── JobTot.Domain.csproj
+│   ├── JobTot.Application/
+│   │   └── JobTot.Application.csproj
+│   ├── JobTot.Infrastructure/
+│   │   ├── DependencyInjection.cs
+│   │   └── JobTot.Infrastructure.csproj
+│   └── JobTot.Api/
+│       ├── Program.cs
+│       ├── appsettings.json
+│       ├── appsettings.Development.json
+│       ├── Properties/
+│       │   └── launchSettings.json
+│       └── JobTot.Api.csproj
+├── .gitignore
+├── .editorconfig
+└── README.md
+```
+
+- `Domain`: entities và quy tắc nghiệp vụ cốt lõi.
+- `Application`: dịch vụ nghiệp vụ, interfaces và DTOs.
+- `Infrastructure`: truy cập SQL Server, Entity Framework và đăng ký dependency.
+- `Api`: cấu hình ứng dụng và các HTTP endpoints.
+
 ## Yêu cầu
 
 - .NET SDK 9.
